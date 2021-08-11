@@ -1,0 +1,27 @@
+Установка
+
+1. https://github.com/barryvdh/laravel-ide-helper composer require --dev barryvdh/laravel-ide-helper -
+Этот пакет генерирует вспомогательные файлы, которые позволяют вашей среде IDE обеспечивать точное автозаполнение.
+
+"scripts": {
+    "post-update-cmd": [
+        "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+        "@php artisan ide-helper:generate",
+        "@php artisan ide-helper:meta"
+    ]
+},
+composer update
+
+
+2. https://github.com/barryvdh/laravel-debugbar laravel-debugbar;
+Это пакет для интеграции панели отладки PHP с Laravel.
+
+
+Миграции
+
+php artisan make:model BlogCategory -m
+php artisan make:model BlogPost -m
+Создаются в app/models и database/migrations
+
+
+php artisan migrate
