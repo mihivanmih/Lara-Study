@@ -61,10 +61,12 @@ php artisan ui vue --auth
 npm install webpack
 npm run dev
 
-
-
+Валидация
+php artisan make:request BlogCategoryUpdateRequest
 
 Запоминалка
 withInput - запоминает значения
 return back()->withErrors(['msg' => "Запись id=[{$id}] не найдена"])->withInput();
 {{ old('description', $item->description) }}
+
+
