@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestTestController;
 use App\Http\Controllers\Blog\PostController;
+use App\Http\Controllers\Blog\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,15 @@ Route::group(['namespace' => '', 'prefix' => 'blog'], function () {
 });
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['namespace' => '', 'prefix' => 'admin/blog'], function () {
+    $methods = ['index', 'edit', 'store', 'update', 'create', 'store'];
+    Route::resource( 'categories', CategoryController::class)->only($methods)->names('blog.admin.categories');
+});
+
+
+/*Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
