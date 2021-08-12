@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Str;
 
 class CategoryController extends BaseController
 {
@@ -31,7 +33,10 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        //
+        $item = new BlogCategory();
+        $categoryList = BlogCategory::all();
+
+        return view('blog.admin.categories.edit', compact('item', 'categoryList'));
     }
 
     /**
@@ -40,9 +45,28 @@ class CategoryController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogCategoryCreateRequest $request)
     {
-        //
+        $data = $request->input();
+        if(empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        //Создаст объект но не добавит в бд
+        $item = new BlogCategory($data);
+        //$item = (new BlogCategory())->create($data);
+        $item->save();
+
+        if($item->exists) {
+            return redirect()
+                ->route('blog.admin.categories.edit', $item->id)
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Ошибка сохранения"])
+                ->withInput();
+        }
+
     }
 
     /**
@@ -90,9 +114,15 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
-        $result = $item
+
+        if(empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+        $result = $item->update($data);
+
+/*        $result = $item
             ->fill($data) //по ключу добавляет
-            ->save();
+            ->save();*/
 
         if($result) {
             return redirect()
