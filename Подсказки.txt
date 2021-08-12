@@ -60,3 +60,11 @@ php artisan ui vue --auth
 
 npm install webpack
 npm run dev
+
+
+
+
+Запоминалка
+withInput - запоминает значения
+return back()->withErrors(['msg' => "Запись id=[{$id}] не найдена"])->withInput();
+{{ old('description', $item->description) }}
