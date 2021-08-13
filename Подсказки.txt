@@ -41,6 +41,7 @@ php artisan make:controller RestTestController --resource
 php artisan make:controller Blog/BaseController
 php artisan make:controller Blog/PostController --resource
 php artisan make:controller Blog/Admin/CategoryController --resource
+php artisan make:controller Blog/Admin/PostController -r
 
 php artisan route:list - Посмотреть все маршруты
 

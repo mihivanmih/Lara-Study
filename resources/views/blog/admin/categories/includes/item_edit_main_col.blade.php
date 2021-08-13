@@ -38,10 +38,10 @@
                                    class="form-control"
                                    placeholder="Выберете категорию"
                                    required>
-                                @foreach($categoryList as $category)
+                             @foreach($categoryList as $category)
                                     <option value="{{ $category->id }}"
                                         @if($category->id == $item->parent_id) selected @endif>
-                                        {{ $category->id }}. {{ $category->title }}
+                                        {{ $category->id_title }} 
                                     </option>
                                 @endforeach
                             </select>

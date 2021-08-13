@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
          <div class="row justify-content-center">
-             <nav class="navbar navbar-toggler navbar-light col-12 pl-0 pb-5">
+             <nav class="navbar navbar-toggler navbar-light col-12 pl-0 pb-3">
                  <a href="{{ route('blog.admin.categories.create') }}" class="btn btn-primary">Добавить</a>
              </nav>
              <div class="card col-12">

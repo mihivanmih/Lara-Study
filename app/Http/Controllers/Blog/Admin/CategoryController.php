@@ -12,6 +12,15 @@ use Illuminate\Support\Str;
 
 class CategoryController extends BaseController
 {
+
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->blogCategoryRepository = app( BlogCategoryRepository::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +31,12 @@ class CategoryController extends BaseController
         //$paginator = BlogCategory::paginate(5);
         //return view('blog.admin.category.index', compact('paginator'));
 
-        return view('blog.admin.categories.index', [
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(15);
+        return view('blog.admin.categories.index', compact('paginator'));
+
+/*        return view('blog.admin.categories.index', [
             'paginator' => DB::table('blog_categories')->paginate(5)
-        ]);
+        ]);*/
     }
 
     /**
@@ -35,7 +47,10 @@ class CategoryController extends BaseController
     public function create()
     {
         $item = new BlogCategory();
-        $categoryList = BlogCategory::all();
+        //$categoryList = BlogCategory::all();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
+
+        //dd($categoryList);
 
         return view('blog.admin.categories.edit', compact('item', 'categoryList'));
     }
@@ -76,18 +91,18 @@ class CategoryController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository)
+    public function edit($id)
     {
         //$item = BlogCategory::findOrFail($id); //find($id) where('id', '<', $id)->first();
         //where('id', $id)->first(); first($id)
         //$categoryList = BlogCategory::all();
 
 
-        $item = $categoryRepository->getEdit($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
         if(empty($item)){
             abort(404);
         }
-        $categoryList = $categoryRepository->getForComboBox();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
 
 
         return view('blog.admin.categories.edit', compact( 'item', 'categoryList'));
@@ -114,13 +129,14 @@ class CategoryController extends BaseController
         $validatedData = $this->validate($request, $rules);
         $validatedData = $request->validate($rules);*/
 
-
-        $item = BlogCategory::find($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
         if(empty($item)) {
             return back()
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
                 ->withInput();
         }
+
+        //$item = BlogCategory::find($id);
 
         $data = $request->all();
 

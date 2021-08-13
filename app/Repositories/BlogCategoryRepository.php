@@ -30,6 +30,39 @@ class BlogCategoryRepository extends CoreRepository
      */
     public function getForComboBox()
     {
-        return $this->startCounditions()->all();
+        /*        $result[] = $this->startCounditions()->all();
+        $result[] = $this
+            ->startCounditions()
+            ->select('blog_categories.*', \DB::raw('CONCAT (id, ". ", title) AS id_title'))
+            ->toBase()
+            ->get();*/
+
+        $fields = implode(', ', [
+            'id',
+            'CONCAT (id, ". ", title) AS id_title'
+        ]);
+
+        $result = $this
+            ->startCounditions()
+            ->selectRaw($fields)
+            ->toBase()
+            ->get();
+
+
+        return  $result;
+
     }
+
+    public function getAllWithPaginate ($count = null)
+    {
+        $fields = ['id', 'title', 'parent_id'];
+
+          $result = $this
+            ->startCounditions()
+            ->select($fields)
+            ->paginate($count);
+
+          return $result;
+    }
+
 }
