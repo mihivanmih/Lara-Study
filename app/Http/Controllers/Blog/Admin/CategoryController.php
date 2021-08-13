@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Blog\Admin;
 
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
+use App\Repositories\BlogCategoryRepository;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use DB;
@@ -75,11 +76,19 @@ class CategoryController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-        $item = BlogCategory::findOrFail($id); //find($id) where('id', '<', $id)->first();
+        //$item = BlogCategory::findOrFail($id); //find($id) where('id', '<', $id)->first();
         //where('id', $id)->first(); first($id)
-        $categoryList = BlogCategory::all();
+        //$categoryList = BlogCategory::all();
+
+
+        $item = $categoryRepository->getEdit($id);
+        if(empty($item)){
+            abort(404);
+        }
+        $categoryList = $categoryRepository->getForComboBox();
+
 
         return view('blog.admin.categories.edit', compact( 'item', 'categoryList'));
     }
