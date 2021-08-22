@@ -38,10 +38,23 @@ class BlogPostRepository extends CoreRepository
             //->with(['category', 'user'])
             ->with(['category' => function($query){
                 $query->select('id', 'title');
-            }])
+            }, 'user' => function($query){
+                $query->select('id', 'name');
+            }], )
             ->paginate(25);
 
         return $result;
     }
+
+    /**
+     * @return mixed
+     * Получить модель для редактирования в админке
+     *
+     */
+    public function getEdit($id)
+    {
+        return $this->startCounditions()->find($id);
+    }
+
 
 }

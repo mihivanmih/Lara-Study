@@ -11,6 +11,17 @@ class BlogPost extends Model
     use SoftDeletes; //не выбирает из базы `deleted_at` is null
     //use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'slug',
+        'category_id',
+        'excerpt',
+        'content_raw',
+        'is_published',
+        'published_at',
+        'user_id'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * Категория статьи

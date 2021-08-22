@@ -33,7 +33,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li><a href="/" class="pl-3">Главная</a></li>
+                        <li><a href="/admin/blog/posts" class="pl-3">Посты</a></li>
+                        <li><a href="/admin/blog/categories" class="pl-3">Категории</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
