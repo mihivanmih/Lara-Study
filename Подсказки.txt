@@ -40,5 +40,39 @@ php artisan make:factory BlogPostFactory
 php artisan make:controller RestTestController --resource
 php artisan make:controller Blog/BaseController
 php artisan make:controller Blog/PostController --resource
+php artisan make:controller Blog/Admin/CategoryController --resource
+php artisan make:controller Blog/Admin/PostController -r
 
 php artisan route:list - Посмотреть все маршруты
+
+Аутентификация
+Установить node.js на open serveer https://siteapp.by/ustanovka-nodejs-v-open-server.html
+
+composer require laravel/ui
+php artisan ui bootstrap
+php artisan ui vue
+php artisan ui bootstrap --auth
+php artisan ui vue --auth
+
+Тут все сломалось. webpack ломает vue-loader и что бы это поправить нужно скачать последнии версии в package.json
+
+        "vue": "3.1.5",
+        "vue-loader": "16.4.1",
+
+npm install webpack
+npm run dev
+
+Валидация
+php artisan make:request BlogCategoryUpdateRequest
+
+Запоминалка
+withInput - запоминает значения
+return back()->withErrors(['msg' => "Запись id=[{$id}] не найдена"])->withInput();
+{{ old('description', $item->description) }}
+
+Observers - Наблюдатели
+//php artisan make:observer BlogPostObserver -model=Models\BlogPost
+//php artisan make:observer BlogCategoryObserver -model=Models\BlogCategory
+
+php artisan make:observer BlogCategoryObserver --model=BlogCategory
+php artisan make:observer BlogPostObserver --model=BlogPost
