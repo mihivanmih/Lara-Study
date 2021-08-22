@@ -70,5 +70,9 @@ withInput - запоминает значения
 return back()->withErrors(['msg' => "Запись id=[{$id}] не найдена"])->withInput();
 {{ old('description', $item->description) }}
 
+Observers - Наблюдатели
+//php artisan make:observer BlogPostObserver -model=Models\BlogPost
+//php artisan make:observer BlogCategoryObserver -model=Models\BlogCategory
 
-
+php artisan make:observer BlogCategoryObserver --model=BlogCategory
+php artisan make:observer BlogPostObserver --model=BlogPost
