@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @php /** @var \App]Models\BlogCategory $item */ @endphp
+    @php /** @var \App]Models\BlogPost $item */ @endphp
 
 
         <div class="container">

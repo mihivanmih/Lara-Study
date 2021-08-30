@@ -19,6 +19,15 @@ class BlogPostObserver
         //
     }
 
+    public function creating(BlogPost $blogPost)
+    {
+        $this->setPublishedAt($blogPost);
+        $this->setSlug($blogPost);
+
+        $this->setHtml($blogPost);
+        $this->setUser($blogPost);
+    }
+
     /**
      * Handle the BlogPost "updated" event.
      *
@@ -59,7 +68,7 @@ class BlogPostObserver
     protected function setPublishedAt(BlogPost $blogPost)
     {
         if(empty($item->published_at) && $blogPost->is_published) {
-            $data->published_at = Carbon::now();
+            $blogPost->published_at = Carbon::now();
         }
     }
 
@@ -72,8 +81,32 @@ class BlogPostObserver
     protected function setSlug(BlogPost $blogPost)
     {
         if(empty($blogPost->slug)) {
-            $data->slug = Str::slug($blogPost->title);
+            $blogPost->slug = Str::slug($blogPost->title);
         }
+    }
+
+    /**
+     * Установка значения полю content_html относительно поля content_raw
+     *
+     * @param BlogPost $blogPost
+     */
+    protected function setHtml(BlogPost $blogPost)
+    {
+        if($blogPost->isDirty('content_raw'))
+        {
+            $blogPost->content_html = $blogPost->content_raw;
+        }
+    }
+
+    /**
+     *
+     * Если не указан user_id, то устанавливаем пользователя по-умолчанию
+     *
+     * @param BlogPost $blogPost
+     */
+    protected function setUser(BlogPost $blogPost)
+    {
+        $blogPost->user_id = auth()->id() ?? BlogPost::UNKNOWN_USER;
     }
 
     /**

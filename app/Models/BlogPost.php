@@ -11,6 +11,8 @@ class BlogPost extends Model
     use SoftDeletes; //не выбирает из базы `deleted_at` is null
     //use HasFactory;
 
+    const UNKNOWN_USER = 1; //заглушка для авторизации
+
     protected $fillable = [
         'title',
         'slug',
@@ -18,8 +20,7 @@ class BlogPost extends Model
         'excerpt',
         'content_raw',
         'is_published',
-        'published_at',
-        'user_id'
+        'published_at'
     ];
 
     /**
