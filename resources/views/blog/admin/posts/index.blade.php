@@ -6,6 +6,21 @@
             <nav class="navbar navbar-toggler navbar-light col-12 pl-0 pb-3">
                 <a href="{{ route('blog.admin.posts.create') }}" class="btn btn-primary">Написать</a>
             </nav>
+            @if(session('success'))
+                <div class="col-md-12 p-0">
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                        {{ session()->get('success') }}
+
+
+                        @if(!session('restore'))
+                            <a href="{{ route('blog.admin.posts.restore', session()->get('id')) }}" class="btn btn-primary ml-5">восстановить</a>
+                        @endif
+                    </div>
+                </div>
+            @endif
             <div class="card col-12">
                 <div class="card-body">
                     <table class="table table-hover">
