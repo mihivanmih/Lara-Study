@@ -76,3 +76,9 @@ Observers - Наблюдатели
 
 php artisan make:observer BlogCategoryObserver --model=BlogCategory
 php artisan make:observer BlogPostObserver --model=BlogPost
+
+
+Чтобы маршруты новые заработали, нужно сбросить кеш php artisan optimize
+
+
+php artisan make:controller DiggingDeeperController --resource

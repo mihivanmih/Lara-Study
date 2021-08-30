@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestTestController;
+use App\Http\Controllers\DiggingDeeperController;
 use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\Blog\Admin\PostController as PostAdminController;
 use App\Http\Controllers\Blog\Admin\CategoryController;
@@ -49,6 +50,11 @@ Route::group(['namespace' => '', 'prefix' => 'admin/blog'], function () {
     Route::resource( 'posts', PostAdminController::class)
         ->except(['show'])
         ->names('blog.admin.posts');
+});
+
+Route::group(['prefix' => 'digging_deeper'], function() {
+    Route::get('collections', [DiggingDeeperController::class, 'collections'])
+        ->name('digging_deeper.collections');
 });
 
 
