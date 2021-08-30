@@ -27,7 +27,12 @@
                                     </a>
                                 </td>
                                 <td @if(in_array($item->parent_id, [0, 1])) style="color: #ccc" @endif>
-                                    {{ $item->parent_id }}
+                                    {{--{{ $item->parent_id }}--}}
+                                   {{-- {{ $item->parentCategory->title ?? '?' }}--}}
+                                   {{-- {{ optional($item->parentCategory)->title  }}--}}
+
+                                   {{-- {{ $item->parent_title }}--}}
+                                    {{ $item->parentTitle }}
                                 </td>
                             </tr>
                         @endforeach
